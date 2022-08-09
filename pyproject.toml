@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ooze"
+version = "0.0.1"
+authors = [
+  { name="Steve Brettschneider", email="steve@bluehousefamily.com" },
+]
+description = "Brain-dead simple dependency injection"
+readme = "README.md"
+license = { file="LICENSE" }
+requires-python = ">=3.9"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+    "Operating System :: OS Independent",
+]
+
+[tool.setuptools]
+packages = ["ooze"]
+
+[project.urls]
+"Homepage" = "https://github.com/brettschneider/ooze"
+"Bug Tracker" = "https://github.com/brettschneider/ooze/issues"
