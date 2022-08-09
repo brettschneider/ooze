@@ -4,6 +4,6 @@
 build
 coverage.xml
 dist
-dunder_xml_reader.egg-info
+ooze.egg-info
 htmlcov
 test_results.xml
