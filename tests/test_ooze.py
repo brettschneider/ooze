@@ -33,25 +33,49 @@ class System:
 
     def do_job(self):
         print(f"System version {self.version}")
+        print(self.shutdown.close())
+        return 1
+
+    def do_other_job(self):
         print(self.greeter.greet())
         print(self.shutdown.close())
+        return 2
 
 
 @ooze.startup
-def main(system: System):
-    system.do_job()
+def tagged_main(system: System):
+    return system.do_job()
 
 
-def test_ooze(mocker):
+def untagged_main(system: System):
+    return system.do_other_job()
+
+
+def test_ooze_with_tagged_main(mocker):
     # Given
     mock_print = mocker.patch('builtins.print')
 
     # When
-    ooze.run()
+    result = ooze.run()
 
     # Then
+    assert result == 1
     assert mock_print.call_args_list == [
         call('System version 1.0.0'),
+        call('SHUTTING DOWN SYSTEM')
+    ]
+
+
+def test_ooze_with_untagged_main(mocker):
+    # Given
+    mock_print = mocker.patch('builtins.print')
+
+    # When
+    result = ooze.run(untagged_main)
+
+    # Then
+    assert result == 2
+    assert mock_print.call_args_list == [
         call('hello steve'),
         call('SHUTTING DOWN SYSTEM')
     ]

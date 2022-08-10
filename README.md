@@ -1,7 +1,7 @@
 # OOZE - Brain-dead simple dependency injection #
 
 Ooze is an attempt to do depdency injection in Python in the simplest
-way possible.  It embraces Python decorators leverage what classes,
+way possible.  It embraces Python decorators to leverage what classes,
 functions, and even static values are included in the dependency
 injection graph.  You can get started in three easy steps:
 

@@ -17,12 +17,13 @@ class InjectionError(Exception):
     """Simple_inject specific exception"""
 
 
-def run():
+def run(startup=None):
     """Look for a STARTUP callable and then run it the application by calling STARTUP."""
-    if _STARTUP is DependencyNotAvailable:
+    startup_to_run = startup if startup else _STARTUP
+    if startup_to_run is DependencyNotAvailable:
         raise InjectionError("No startup function assigned")
     _instantiate_objects()
-    _execute(_STARTUP)
+    return _execute(startup_to_run)
 
 
 def _instantiate_objects():
@@ -76,17 +77,17 @@ def provide(name_or_item):
     """ A decorator to add a class, function or static value to the dependency graph."""
     if inspect.isclass(name_or_item):
         class_to_provide = name_or_item
-        class_name = class_to_provide.__name__
+        class_name = class_to_provide.__name__.lower()
         _CLASSES_TO_INSTANTIATE[class_name] = class_to_provide
         return class_to_provide
     elif inspect.isfunction(name_or_item):
         func_to_provide = name_or_item
-        func_name = name_or_item.__name__
+        func_name = name_or_item.__name__.lower()
         _INSTANCES[func_name] = func_to_provide
         return func_to_provide
     else:
         def inner_provide(item):
-            name = name_or_item
+            name = name_or_item.lower()
             if inspect.isclass(item):
                 _CLASSES_TO_INSTANTIATE[name] = item
             else:
