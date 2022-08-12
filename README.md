@@ -13,18 +13,18 @@ That's it!  Here's a quick example:
 
     import ooze
 
-    @ooze.provide               # Inject as 'upper_case' since a name wasn't specified
+    @ooze.provide                       # Inject as 'upper_case' since a name wasn't specified
     def upper_case(string):
         return string.upper()
 
 
-    ooze.provide('address')({   # Inject a static dictionary, naming it 'address'
+    ooze.provide_static('address', {    # Inject a static dictionary, naming it 'address'
         "name": "Steve",
         "gender": "male"
     })
 
 
-    @ooze.provide('greeter')    # Inject as 'greeter'
+    @ooze.provide('greeter')            # Inject as 'greeter'
     class WelcomeWagon:
         def __init__(self, upper_case, address):
             self.address = address
@@ -105,11 +105,13 @@ is reasonable.
 _Additional node:_  Ooze is aggressive and will instantiate all class instances at
 application startup, not when they are first used.
 
-Adding static items to the dependency graph is easy, however, you are required to
-name your items explicitly:
 
-    ooze.provide('version')('1.2.0')
-    ooze.provide('config')({
+### Providing static values ###
+Adding static items to the dependency graph is similarly easy by using the
+`ooze.provide_static()` method.
+
+    ooze.provide_static('version', '1.2.0')
+    ooze.provide_static('config', {
         'env': 'dev',
         'url': 'http://contacts.dev.api.org/'
     })
@@ -118,10 +120,6 @@ In the above example, two static items are being added to the dependency graph:
 
 * A string: '1.2.0' is added, named as 'version'
 * A  dictionary with keys: 'env' and 'url' added, named as 'config'
-
-Note that the acutal value must be enclosed within parentheses and the lack of
-the '@' symbol.  This is because we are directly calling the decorator code to
-add the item rather than using Python's decorator syntax.
 
 You can add any static item to the DI graph that you want.  You just have to name it
 yourself.
@@ -161,6 +159,20 @@ so you can use them in any further processing.
 
 The `ooze.run()` function will try to resolve any dependencies that the startup function
 has using what it finds in the dependency graph.
+
+
+### Manually retrieving items ###
+Normally dependency injector items are only accessed from within other running dependency
+items.  From time to time, however, there is a need to gain access to a dependency 
+injector item from outside ozze.  This can be accomplished using the `ooze.resolve()`
+function:
+
+    @app.get('/api/<customer_id>')
+    def get_customer(customer_id):
+        repo = ooze.resolve('database_repository')
+        serializer = ooze.resolve('json_serializer')
+        return serializer(repo.get_customer(customer_id))
+
 
 ### Other modules and packages ###
 
