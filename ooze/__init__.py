@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 """Ooze - A _very_ simple dependency injector"""
 import inspect
-import sys
 
 
 class DependencyNotAvailable:
@@ -17,9 +16,9 @@ class InjectionError(Exception):
     """Simple_inject specific exception"""
 
 
-def run(startup=None):
+def run(startup_callable=None):
     """Look for a STARTUP callable and then run it the application by calling STARTUP."""
-    startup_to_run = startup if startup else _STARTUP
+    startup_to_run = startup_callable if startup_callable else _STARTUP
     if startup_to_run is DependencyNotAvailable:
         raise InjectionError("No startup function assigned")
     _instantiate_objects()
@@ -95,3 +94,14 @@ def provide(name_or_item):
             return item
 
         return inner_provide
+
+
+def provide_static(name: str, item):
+    """Convenience method to add static values"""
+    provide(name)(item)
+
+
+def resolve(name):
+    """Retieve an item from the dependency graph from outside a provided callable"""
+    _instantiate_objects()
+    return _INSTANCES[name]

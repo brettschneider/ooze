@@ -16,7 +16,7 @@ def lower_case(string: str) -> str:
     return string.lower()
 
 
-ooze.provide('address')({
+ooze.provide_static('address', {
     "name": "Steve",
     "age": 50
 })
@@ -79,3 +79,14 @@ def test_ooze_with_untagged_main(mocker):
         call('hello steve'),
         call('SHUTTING DOWN SYSTEM')
     ]
+
+
+def test_resolve():
+    # Given
+    greeter = ooze.resolve('greeter')
+
+    # When
+    result = greeter.greet()
+
+    # Then
+    assert result == 'hello steve'
