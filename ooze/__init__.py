@@ -102,6 +102,32 @@ def provide_static(name: str, item):
 
 
 def resolve(name):
-    """Retieve an item from the dependency graph from outside a provided callable"""
+    """Retrieve an item from the dependency graph from outside a provided callable"""
     _instantiate_objects()
-    return _INSTANCES[name]
+    try:
+        return _INSTANCES[name]
+    except KeyError:
+        raise InjectionError(f"{name} not present in container")
+
+
+class OozeBottlePlugin:
+    api = 2
+
+    def apply(self, callback, _):
+        args = inspect.signature(callback)
+        dependencies = {}
+
+        for kw in args.parameters:
+            try:
+                dependencies[kw] = resolve(kw)
+            except InjectionError:
+                # Ignore injection error because other Bottle plugins may satisfy
+                pass
+        if not dependencies:
+            return callback
+
+        def wrapper(*args, **kwargs):
+            kwargs = kwargs | dependencies
+            return callback(*args, **kwargs)
+
+        return wrapper
