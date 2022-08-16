@@ -208,3 +208,26 @@ When you run `main.py`, `main_func` will have the `FileReader` injected into it 
 you'd expect, but only if the `import file_reader` line is present.  If you were to
 fail to import the `file_reader` module, Ooze wouldn't have an opportunity to
 add the `FileReader` instance to the dependency graph.
+
+
+## Integration with bottle ##
+
+Ooze can be easily integrated with [bottle](https://bottlepy.org) using the
+`OozeBottlePlugin`.  Simply `.install()` the plugin and Ooze dependencies will 
+automatically be injected into your bottle functions:
+
+    import ooze
+    from bottle import Bottle
+
+    @ooze.provide
+    def add_numbers(x, y):
+        return x + y
+
+    app = Bottle()
+    app.install(ooze.OozeBottlePlugin())
+
+    @app.get('/add/<x>/<y>')
+    def web_add(x, y, add_numbers):
+        return {
+            'sum': add_numbers(x, y)
+        }
