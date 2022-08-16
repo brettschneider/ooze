@@ -92,7 +92,6 @@ def test_resolve():
 
     # Then
     assert result == 'hello steve'
-<<<<<<< HEAD
 
 
 def test_resolve_not_present():
@@ -102,5 +101,3 @@ def test_resolve_not_present():
 
     # Then
     assert exc_info.value.args[0] == 'itza-notta-thera not present in container'
-=======
->>>>>>> main
