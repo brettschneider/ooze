@@ -1,6 +1,8 @@
 """Testing ooze dependency injection."""
 from unittest.mock import call
 
+import pytest
+
 from tests.complex_project.greeter import WelcomeWagon
 from tests.complex_project.shutdown import Shutdown
 import ooze
@@ -90,3 +92,12 @@ def test_resolve():
 
     # Then
     assert result == 'hello steve'
+
+
+def test_resolve_not_present():
+    # When
+    with pytest.raises(ooze.InjectionError) as exc_info:
+        ooze.resolve('itza-notta-thera')
+
+    # Then
+    assert exc_info.value.args[0] == 'itza-notta-thera not present in container'

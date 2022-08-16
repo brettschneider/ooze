@@ -102,6 +102,9 @@ def provide_static(name: str, item):
 
 
 def resolve(name):
-    """Retieve an item from the dependency graph from outside a provided callable"""
+    """Retrieve an item from the dependency graph from outside a provided callable"""
     _instantiate_objects()
-    return _INSTANCES[name]
+    try:
+        return _INSTANCES[name]
+    except KeyError:
+        raise InjectionError(f"{name} not present in container")
