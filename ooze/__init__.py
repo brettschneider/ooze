@@ -102,6 +102,7 @@ def provide_static(name: str, item):
 
 
 def resolve(name):
+<<<<<<< HEAD
     """Retrieve an item from the dependency graph from outside a provided callable"""
     _instantiate_objects()
     try:
@@ -131,3 +132,8 @@ class OozeBottlePlugin:
             return callback(*args, **kwargs)
 
         return wrapper
+=======
+    """Retieve an item from the dependency graph from outside a provided callable"""
+    _instantiate_objects()
+    return _INSTANCES[name]
+>>>>>>> main
