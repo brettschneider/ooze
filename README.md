@@ -161,10 +161,40 @@ The `ooze.run()` function will try to resolve any dependencies that the startup 
 has using what it finds in the dependency graph.
 
 
+### Factories ###
+
+Sometimes the dependency isn't available at the time your script starts up and needs to be
+loaded at runtime: reading a file, result of a web service call, etc.  Ooze makes this easy
+by providing factories.  When you mark a function (or any callable) as a factory, instead of
+injecting that function as the dependency, it will call the function and inject it's return
+value as the dependency.
+
+    @ooze.factory('config')
+    def lookup_config():
+        with open('config.json') as infile:
+            return json.load(infile)
+
+    @ooze.provide('db')
+    class DatabaseManager:
+        def __init__(self, config: dict):
+            self.config = config
+
+        def get_connection(self):
+            pass
+
+In the above example, when the `db` dependency is resolved, a new `DatabaseManager`
+object will be instantiated.  It will have a `config` injected into it.  Ooze will not
+inject the `lookup_config` function, but rather it will __CALL__ the `lookup_config`
+function and inject it's return value as `config` into the `DatabaseManager`.
+
+Just like `@ooze.provide`, `@ooze.factory` optionally takes a name to use when adding
+the factory to the dependency graph.
+
+
 ### Manually retrieving items ###
 Normally dependency injector items are only accessed from within other running dependency
 items.  From time to time, however, there is a need to gain access to a dependency 
-injector item from outside ozze.  This can be accomplished using the `ooze.resolve()`
+injector item from outside ooze.  This can be accomplished using the `ooze.resolve()`
 function:
 
     @app.get('/api/<customer_id>')

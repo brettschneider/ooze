@@ -10,6 +10,7 @@ class DependencyNotAvailable:
 _STARTUP = DependencyNotAvailable
 _INSTANCES = {}
 _CLASSES_TO_INSTANTIATE = {}
+_FACTORIES = {}
 
 
 class InjectionError(Exception):
@@ -55,12 +56,23 @@ def _instantiate_objects():
 def _execute(func):
     """Figure out what the func needs to run and then run it."""
     needed_args = inspect.signature(func)
-    kwargs = {key: _INSTANCES.get(key, DependencyNotAvailable) for key in needed_args.parameters}
+    kwargs = {key: _resolve_dependency(key) for key in needed_args.parameters}
     missing_deps = [dep for dep in kwargs if kwargs[dep] is DependencyNotAvailable]
     if missing_deps:
         name = func.__name__
         raise InjectionError(f"Cannot execute {name} - Missing dependencies: {', '.join(missing_deps)}")
     return func(**kwargs)
+
+
+def _resolve_dependency(dep_name):
+    """Attempts to resolve the dependency"""
+    dep = _INSTANCES.get(dep_name, DependencyNotAvailable)
+    if dep is DependencyNotAvailable:
+        factory_func = _FACTORIES.get(dep_name, DependencyNotAvailable)
+        if factory_func is DependencyNotAvailable:
+            raise InjectionError(f"{dep_name} not a valid dependency")
+        return _execute(factory_func)
+    return dep
 
 
 def startup(func):
@@ -101,13 +113,27 @@ def provide_static(name: str, item):
     provide(name)(item)
 
 
+def factory(name_or_item):
+    """A decorator to add a factory to the dependency graph."""
+    if callable(name_or_item):
+        factory_func = name_or_item
+        factory_name = factory_func.__name__.lower()
+        _FACTORIES[factory_name] = factory_func
+        return factory_func
+    else:
+        def inner_factory(item):
+            inner_factory_func = item
+            inner_factory_name = name_or_item
+            _FACTORIES[inner_factory_name] = inner_factory_func
+            return inner_factory_func
+
+        return inner_factory
+
+
 def resolve(name):
     """Retrieve an item from the dependency graph from outside a provided callable"""
     _instantiate_objects()
-    try:
-        return _INSTANCES[name]
-    except KeyError:
-        raise InjectionError(f"{name} not present in container")
+    return _resolve_dependency(name)
 
 
 class OozeBottlePlugin:
