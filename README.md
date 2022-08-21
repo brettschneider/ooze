@@ -164,7 +164,7 @@ has using what it finds in the dependency graph.
 ### Manually retrieving items ###
 Normally dependency injector items are only accessed from within other running dependency
 items.  From time to time, however, there is a need to gain access to a dependency 
-injector item from outside ozze.  This can be accomplished using the `ooze.resolve()`
+injector item from outside ooze.  This can be accomplished using the `ooze.resolve()`
 function:
 
     @app.get('/api/<customer_id>')
