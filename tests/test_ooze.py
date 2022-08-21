@@ -26,6 +26,14 @@ ooze.provide_static('address', {
 ooze.provide('version')('1.0.0')
 
 
+@ooze.factory('config')
+def load_config(version):
+    return {
+        'version': version,
+        'url': 'https://github.com/brettschneider/ooze/issues'
+    }
+
+
 @ooze.provide
 class System:
     def __init__(self, version: str, greeter: WelcomeWagon, shutdown: Shutdown):
@@ -100,4 +108,15 @@ def test_resolve_not_present():
         ooze.resolve('itza-notta-thera')
 
     # Then
-    assert exc_info.value.args[0] == 'itza-notta-thera not present in container'
+    assert exc_info.value.args[0] == 'itza-notta-thera not a valid dependency'
+
+
+def test_factory():
+    # Given
+    greeter = ooze.resolve('greeter')
+
+    # When
+    result = greeter.version
+
+    # Then
+    assert result == '1.0.0'
