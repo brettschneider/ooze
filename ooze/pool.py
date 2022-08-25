@@ -16,8 +16,12 @@ class PoolItem:
 
 
 class Pool:
-    def __init__(self, create: Callable, teardown: Callable, pool_size: int = 5):
+    def __init__(self, create: Callable,
+                 reclaim: Callable or None = None,
+                 teardown: Callable or None = None,
+                 pool_size: int = 5):
         self.create = create
+        self.reclaim = reclaim
         self.teardown = teardown
         self.pool_size = pool_size
         self.items = []
@@ -26,8 +30,9 @@ class Pool:
     def __del__(self):
         self._lock.acquire()
         try:
-            for item in self.items:
-                self.teardown(item)
+            if self.teardown:
+                for item in self.items:
+                    self.teardown(item)
             self.items = []
         finally:
             self._lock.release()
@@ -46,7 +51,11 @@ class Pool:
         self._lock.acquire()
         try:
             while len(self.items) >= self.pool_size:
-                self.teardown(self.items.pop(0))
+                item = self.items.pop(0)
+                if self.teardown:
+                    self.teardown(item)
+            if self.reclaim:
+                self.reclaim(item)
             self.items.append(item)
         finally:
             self._lock.release()
