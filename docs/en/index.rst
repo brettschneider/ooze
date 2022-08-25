@@ -16,8 +16,7 @@ injection graph.  You can get started in three easy steps:
 
 That's it!  Here's a quick example:
 
-.. code-block:: python
-   :caption: Getting started with Ooze
+.. code:: python
 
     import ooze
 
@@ -57,7 +56,7 @@ Installing Ooze
 
 Installing Ooze is as simple as using pip:
 
-.. code-block:: sh
-   :caption: Installing Ooze
+.. code:: sh
+
     $ pip install ooze
 
