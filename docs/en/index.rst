@@ -5,6 +5,8 @@ Ooze
 A brain-dead simple dependency injector
 ---------------------------------------
 
+Overview
+--------
 Ooze is an attempt to do dependency injection in Python in the simplest
 way possible.  It embraces Python decorators to leverage what classes,
 functions, and even static values are included in the dependency
@@ -50,13 +52,27 @@ That's it!  Here's a quick example:
         ooze.run()
 
 
-===============
 Installing Ooze
-===============
-
+---------------
 Installing Ooze is as simple as using pip:
 
 .. code:: sh
 
     $ pip install ooze
+
+
+User Guide
+------------
+
+1. `How injection works <./how_injection_works.rst>`_
+
+2. `The @ooze.provide decorator <./ooze_provide.rst>`_
+
+3. `The ooze.provide_status function <./ooze_provide_static.rst>`_
+
+4. `The @ooze.startup decorator <./ooze_startup.rst>`_
+
+5. `The @ooze.factory decorator <./ooze_factory.rst>`_
+
+6. `Ooze pools <./ooze_pools.rst>`_
 
