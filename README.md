@@ -204,8 +204,41 @@ function:
         return serializer(repo.get_customer(customer_id))
 
 
-### Other modules and packages ###
+### Magic environment variable lookups ###
+When ooze is injecting dependencies into your function/class, it will first search
+the DI graph of instances.  If it can't find an instance it will then look through
+the registered factories (see `@ooze.factory` above).  After that, it will search
+through your environment variables to try and find a value to inject.  This makes
+injecting settings from your OS (often populated from container secrets - i.e. 
+Docker and/or Kubernetes secrets) into your script.
 
+    #!/usr/bin/env python
+    """main.py"""
+
+    import ooze
+
+    @ooze.provide
+    def report_version(version):
+        return f"Current version: {version}"
+
+    def main(report_version):
+        print(report_version())
+
+    ooze.run(main)
+
+Then
+
+    $ export version="999.99"
+    $ python main.py
+    Current version: 999.99
+    $
+    
+Ooze will try looking in the environment for your dependency as-is with the case you
+specify in your function arguments.  If it can't find it, it will try upper-case and
+lower-case before failing.
+
+
+### Other modules and packages ###
 Ooze decorators can be used across modules and packages in the event you want/need to
 write a non-trvial Python application.  There is only one stipulation:  Any modules or
 packages that you want to participate with Ooze must be imported into the Python process.
