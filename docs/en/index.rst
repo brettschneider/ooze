@@ -64,7 +64,7 @@ Installing Ooze is as simple as using pip:
 User Guide
 ------------
 
-1. `How injection works <./how_injection_works.rst>`_
+1. `How injection works in Ooze <./how_injection_works.rst>`_
 
 2. `The @ooze.provide decorator <./ooze_provide.rst>`_
 
