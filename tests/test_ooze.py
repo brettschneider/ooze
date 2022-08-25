@@ -1,4 +1,5 @@
 """Testing ooze dependency injection."""
+import os
 from unittest.mock import call
 
 import pytest
@@ -120,3 +121,14 @@ def test_factory():
 
     # Then
     assert result == '1.0.0'
+
+
+def test_environment_resolution():
+    # Given
+    os.environ['URL'] = 'https://github.com/'
+
+    # When
+    result = ooze.resolve('url')
+
+    # Then
+    assert result == 'https://github.com/'
