@@ -68,11 +68,13 @@ User Guide
 
 2. `The @ooze.provide decorator <./ooze_provide.rst>`_
 
-3. `The ooze.provide_status function <./ooze_provide_static.rst>`_
+3. `The ooze.provide_static function <./ooze_provide_static.rst>`_
 
 4. `The @ooze.startup decorator <./ooze_startup.rst>`_
 
 5. `The @ooze.factory decorator <./ooze_factory.rst>`_
 
-6. `Ooze pools <./ooze_pools.rst>`_
+6. `OS Environment variables <./os_environment_variables.rst>`_
+
+7. `Ooze pools <./ooze_pools.rst>`_
 
