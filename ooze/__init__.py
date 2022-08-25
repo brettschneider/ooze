@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """Ooze - A _very_ simple dependency injector"""
 import inspect
+import os
 
 
 class DependencyNotAvailable:
@@ -66,11 +67,18 @@ def _execute(func):
 
 def _resolve_dependency(dep_name):
     """Attempts to resolve the dependency"""
-    dep = _INSTANCES.get(dep_name, DependencyNotAvailable)
+    dep = _INSTANCES.get(dep_name, DependencyNotAvailable)                  # First check the existing instances
     if dep is DependencyNotAvailable:
-        factory_func = _FACTORIES.get(dep_name, DependencyNotAvailable)
+        factory_func = _FACTORIES.get(dep_name, DependencyNotAvailable)     # Second check the factories
         if factory_func is DependencyNotAvailable:
-            raise InjectionError(f"{dep_name} not a valid dependency")
+            dep = os.environ.get(dep_name, DependencyNotAvailable)               # Third check the OS environment
+            if dep is DependencyNotAvailable:
+                dep = os.environ.get(dep_name.upper(), DependencyNotAvailable)
+            if dep is DependencyNotAvailable:
+                dep = os.environ.get(dep_name.lower(), DependencyNotAvailable)
+            if dep is DependencyNotAvailable:
+                raise InjectionError(f"{dep_name} not a valid dependency")
+            return dep
         return _execute(factory_func)
     return dep
 
