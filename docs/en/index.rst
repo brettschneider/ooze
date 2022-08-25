@@ -43,7 +43,7 @@ That's it!  Here's a quick example:
             return self.upper(f"Hello {self.address['name']}")
 
 
-    @ooze.startup               # Define where ooze should start running your program
+    @ooze.startup                       # Define where ooze should start running your program
     def main(greeter):
         print(greeter.greet())
 
@@ -78,3 +78,4 @@ User Guide
 
 7. `Ooze pools <./ooze_pools.rst>`_
 
+8. `Using Ooze with Bottle.py <./ooze_bottle.rst>`_
