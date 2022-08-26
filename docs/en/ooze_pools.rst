@@ -52,7 +52,8 @@ The arguments have the following meanings:
 |               |            | add new instances of your dependency to the pool.                 |
 +---------------+------------+-------------------------------------------------------------------+
 | reclaim_item  | None       | is a callable that takes a single argument, an instance of your   |
-|               |            | dependency, and returns nothing.  The purpose of this callable is |
+|               |            | dependency, and returns nothing.  Ooze calls this on items when   |
+|               |            | they are returned to the pool.  The purpose of this callable is   |
 |               |            | to 'reset' the dependency so that it will be ready for the next   |
 |               |            | injection.                                                        |
 +---------------+------------+-------------------------------------------------------------------+
