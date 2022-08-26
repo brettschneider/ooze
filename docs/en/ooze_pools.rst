@@ -47,7 +47,9 @@ The arguments have the following meanings:
 | Argument      | Default    | Description                                                       |
 +===============+============+===================================================================+
 | create_item   | (required) | is a callable that takes no arguments, but returns a new instance |
-|               |            | of the dependency that you'd like to pool.                        |
+|               |            | of the dependency that you'd like to pool.  The pool instance     |
+|               |            | will call this callable on an as-needed basis when it wants to    |
+|               |            | add new instances of your dependency to the pool.                 |
 +---------------+------------+-------------------------------------------------------------------+
 | reclaim_item  | None       | is a callable that takes a single argument, an instance of your   |
 |               |            | dependency, and returns nothing.  The purpose of this callable is |
@@ -67,7 +69,7 @@ The only required argument to the Pool constructor is *create_item*.  That being
 be wise to at least consider providing a *reclaim_item* so you can verify and reset items
 before they get used again, especially if they maintain any kind of internal state.
 
-The pool instance is a Python context manager.  Use with Python **with* statement
+The pool instance is a Python context manager.  Use with Python **with** statement
 on the pools *item()* method to obtain an instance of the dependency item.
 
 An example to illustrate (again you can use Pools with anything, I just happen
