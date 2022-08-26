@@ -43,25 +43,29 @@ pool constructor takes the following arguements:
 
 The arguments have the following meanings:
 
-+---------------+-------------------------------------------------------------------+
-| Argument      | Description                                                       |
-+===============+===================================================================+
-| create_item   | is a callable that takes no arguments, but returns a new instance |
-|               | of the dependency that you'd like to pool.                        |
-+---------------+-------------------------------------------------------------------+
-| reclaim_item  | is a callable that takes a single argument, an instance of your   |
-|               | dependency, and returns nothing.  The purpose of this callable is |
-|               | to 'reset' the dependency so that it will be ready for the next   |
-|               | injection.                                                        |
-+---------------+-------------------------------------------------------------------+
-| teardown_item | is a callable that takes a single arguement, an intance of your   |
-|               | dependency, and returns nothing.  The purpose of this callable is |
-|               | to gracefully shut down your dependency (close a db connection    |
-|               | for example) before your script terminates.                       |
-+---------------+-------------------------------------------------------------------+
-| pool_size     | is an integer indicating how large you'd like to pool to be at    |
-|               | any given time.                                                   |
-+---------------+-------------------------------------------------------------------+
++---------------+------------+-------------------------------------------------------------------+
+| Argument      | Default    | Description                                                       |
++===============+============+===================================================================+
+| create_item   | (required) | is a callable that takes no arguments, but returns a new instance |
+|               |            | of the dependency that you'd like to pool.                        |
++---------------+------------+-------------------------------------------------------------------+
+| reclaim_item  | None       | is a callable that takes a single argument, an instance of your   |
+|               |            | dependency, and returns nothing.  The purpose of this callable is |
+|               |            | to 'reset' the dependency so that it will be ready for the next   |
+|               |            | injection.                                                        |
++---------------+------------+-------------------------------------------------------------------+
+| teardown_item | None       | is a callable that takes a single arguement, an intance of your   |
+|               |            | dependency, and returns nothing.  The purpose of this callable is |
+|               |            | to gracefully shut down your dependency (close a db connection    |
+|               |            | for example) before your script terminates.                       |
++---------------+------------+-------------------------------------------------------------------+
+| pool_size     | 5          | is an integer indicating how large you'd like to pool to be at    |
+|               |            | any given time.                                                   |
++---------------+------------+-------------------------------------------------------------------+
+
+The only required argument to the Pool constructor is *create_item*.  That being said, you'd
+be wise to at least consider providing a *reclaim_item* so you can verify and reset items
+before they get used again, especially if they maintain any kind of internal state.
 
 The pool instance is a Python context manager.  Use with Python **with* statement
 on the pools *item()* method to obtain an instance of the dependency item.
@@ -77,7 +81,10 @@ to use database connections in my example as they are easy to relate to):
         return db_con_factory()
 
     def reclaim_item(db_con):
-        db_con.reset()
+        try:
+            db_con.commit()
+        except:
+            pass
 
     def teardown_item(db_con):
         db_con.close()
