@@ -5,10 +5,10 @@ Multi-module and/or multi-package projects
 Overview
 --------
 
-Ooze will happily work with complex projects that has multiple modules
+Ooze will happily work with complex projects that have multiple modules
 and packages.  The only stipulation to this is that Ooze has to be
 aware of the module and/or packages.  What this means that if you
-done `import` a module or package, Ooze won't know about it.
+don't `import` a module or package, Ooze won't know about it.
 
 For example, you may have module `file_reader.py` that has the following code:
 
