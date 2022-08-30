@@ -80,4 +80,6 @@ User Guide
 
 8. `Ooze pools <./ooze_pools.rst>`_
 
-9. `Using Ooze with Bottle.py <./ooze_bottle.rst>`_
+9. `Multi-module, multi-package Python projects <./multi-module.rst>`_
+
+10. `Using Ooze with Bottle.py <./ooze_bottle.rst>`_
