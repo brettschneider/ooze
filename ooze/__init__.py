@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 """Ooze - A _very_ simple dependency injector"""
 import inspect
+import json
 import os
+
+import yaml
 
 
 class DependencyNotAvailable:
@@ -15,7 +18,11 @@ _FACTORIES = {}
 
 
 class InjectionError(Exception):
-    """Simple_inject specific exception"""
+    """Error related to inject failures"""
+
+
+class ConfigurationError(Exception):
+    """Error related to reading configuration(s)"""
 
 
 def run(startup_callable=None):
@@ -65,22 +72,57 @@ def _execute(func):
     return func(**kwargs)
 
 
-def _resolve_dependency(dep_name):
+def _resolve_dependency(dep_name: str):
     """Attempts to resolve the dependency"""
-    dep = _INSTANCES.get(dep_name, DependencyNotAvailable)                  # First check the existing instances
+    resolvers = [_resolve_dependency_os_env, _resolve_dependency_instance, _resolve_dependency_factory,
+                 _resolve_dependency_config]
+    dep = DependencyNotAvailable
+    for resolver in resolvers:
+        dep = resolver(dep_name)
+        if dep is not DependencyNotAvailable:
+            break
     if dep is DependencyNotAvailable:
-        factory_func = _FACTORIES.get(dep_name, DependencyNotAvailable)     # Second check the factories
-        if factory_func is DependencyNotAvailable:
-            dep = os.environ.get(dep_name, DependencyNotAvailable)               # Third check the OS environment
-            if dep is DependencyNotAvailable:
-                dep = os.environ.get(dep_name.upper(), DependencyNotAvailable)
-            if dep is DependencyNotAvailable:
-                dep = os.environ.get(dep_name.lower(), DependencyNotAvailable)
-            if dep is DependencyNotAvailable:
-                raise InjectionError(f"{dep_name} not a valid dependency")
-            return dep
-        return _execute(factory_func)
+        raise InjectionError(f"{dep_name} not a valid dependency")
     return dep
+
+
+def _resolve_dependency_instance(dep_name: str):
+    return _INSTANCES.get(dep_name, DependencyNotAvailable)
+
+
+def _resolve_dependency_factory(dep_name: str):
+    factory_func = _FACTORIES.get(dep_name, DependencyNotAvailable)
+    if factory_func is DependencyNotAvailable:
+        return factory_func
+    return _execute(factory_func)
+
+
+def _resolve_dependency_os_env(dep_name: str):
+    dep = os.environ.get(dep_name, DependencyNotAvailable)
+    if dep is DependencyNotAvailable:
+        dep = os.environ.get(dep_name.upper(), DependencyNotAvailable)
+    if dep is DependencyNotAvailable:
+        dep = os.environ.get(dep_name.lower(), DependencyNotAvailable)
+    return dep
+
+
+def _resolve_dependency_config(dep_name: str):
+    filenames = ['application_settings.json', 'application_settings.yml', 'application_settings.yaml']
+    if 'APPLICATION_SETTINGS' in os.environ:
+        filenames = [os.environ['APPLICATION_SETTINGS']] + filenames
+    for filename in filenames:
+        try:
+            with open(filename) as infile:
+                extension = os.path.splitext(filename)[1]
+                if extension in ['.json', '.yml', '.yaml']:
+                    config = yaml.safe_load(infile)
+                else:
+                    raise ConfigurationError(f"Configuration files with {extension} extension not supported")
+                if dep_name in config:
+                    return config[dep_name]
+        except FileNotFoundError:
+            pass
+    return DependencyNotAvailable
 
 
 def startup(func):

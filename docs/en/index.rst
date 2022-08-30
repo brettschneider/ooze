@@ -74,8 +74,10 @@ User Guide
 
 5. `The @ooze.factory decorator <./ooze_factory.rst>`_
 
-6. `OS Environment variables <./os_environment_variables.rst>`_
+6. `OS Environment variables <./ooze_os_environment_variables.rst>`_
 
-7. `Ooze pools <./ooze_pools.rst>`_
+7. `Configuration files <./ooze_configuration_files.rst>`_
 
-8. `Using Ooze with Bottle.py <./ooze_bottle.rst>`_
+8. `Ooze pools <./ooze_pools.rst>`_
+
+9. `Using Ooze with Bottle.py <./ooze_bottle.rst>`_
