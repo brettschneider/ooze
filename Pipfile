@@ -8,6 +8,7 @@ pytest = "*"
 pytest-mock = "*"
 pytest-coverage = "*"
 twine = "*"
+pyyaml = "*"
 
 [dev-packages]
 

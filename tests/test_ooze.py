@@ -1,5 +1,6 @@
 """Testing ooze dependency injection."""
 import os
+from io import BytesIO
 from unittest.mock import call
 
 import pytest
@@ -132,3 +133,75 @@ def test_environment_resolution():
 
     # Then
     assert result == 'https://github.com/'
+
+
+def test_config_resolution_json(mocker):
+    # Given
+    mock_open = mocker.patch('ooze.open')
+    mock_open.side_effect = [
+        BytesIO(bytes('{"json_url": "https://github.com"}', 'utf-8')),
+        FileNotFoundError,
+        FileNotFoundError
+    ]
+
+    # When
+    result = ooze.resolve('json_url')
+
+    # Then
+    assert result == "https://github.com"
+    mock_open.assert_called_with('application_settings.json')
+
+
+def test_config_resolution_yaml(mocker):
+    # Given
+    mock_open = mocker.patch('ooze.open')
+    mock_open.side_effect = [
+        FileNotFoundError,
+        BytesIO(bytes("""
+        yaml_url: https://github.com
+        """, 'utf-8')),
+        FileNotFoundError
+    ]
+
+    # When
+    result = ooze.resolve('yaml_url')
+
+    # Then
+    assert result == "https://github.com"
+    mock_open.assert_called_with('application_settings.yml')
+
+
+def test_config_resolution_file_not_found(mocker):
+    # Given
+    mock_open = mocker.patch('ooze.open')
+    mock_open.side_effect = [
+        FileNotFoundError,
+        FileNotFoundError,
+        FileNotFoundError
+    ]
+
+    # When
+    with pytest.raises(ooze.InjectionError) as exc_info:
+        ooze.resolve('fnf_url')
+
+    # Then
+    assert exc_info.value.args[0] == 'fnf_url not a valid dependency'
+
+
+def test_config_resolution_manual_file(mocker):
+    # Given
+    os.environ['APPLICATION_SETTINGS'] = '/tmp/app.yaml'
+    mock_open = mocker.patch('ooze.open')
+    mock_open.side_effect = [
+        BytesIO(bytes('{"manual_url": "https://github.com"}', 'utf-8')),
+        FileNotFoundError,
+        FileNotFoundError,
+        FileNotFoundError
+    ]
+
+    # When
+    result = ooze.resolve('manual_url')
+
+    # Then
+    assert result == 'https://github.com'
+    mock_open.assert_called_with('/tmp/app.yaml')

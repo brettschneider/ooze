@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ooze"
-version = "0.0.7"
+version = "0.0.8"
 authors = [
   { name="Steve Brettschneider", email="steve@bluehousefamily.com" },
 ]
@@ -25,4 +25,4 @@ packages = ["ooze"]
 [project.urls]
 "Homepage" = "https://github.com/brettschneider/ooze"
 "Bug Tracker" = "https://github.com/brettschneider/ooze/issues"
-"Documentation" = "https://github.com/brettschneider/ooze/blob/dev/docs/en/index.rst"
+"Documentation" = "https://github.com/brettschneider/ooze/blob/main/docs/en/index.rst"
