@@ -74,7 +74,7 @@ def _execute(func):
 
 def _resolve_dependency(dep_name: str):
     """Attempts to resolve the dependency"""
-    resolvers = [_resolve_dependency_instance, _resolve_dependency_factory, _resolve_dependency_os_env,
+    resolvers = [_resolve_dependency_os_env, _resolve_dependency_instance, _resolve_dependency_factory,
                  _resolve_dependency_config]
     dep = DependencyNotAvailable
     for resolver in resolvers:
