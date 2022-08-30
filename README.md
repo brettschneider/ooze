@@ -61,5 +61,5 @@ including:
 * seamless integration with [bottlepy](https://bottlepy.org/)
 * injectable object pools (i.e. Database connection pools)
  
-Be sure to check out the [documentation](docs/en/index.rst) for more
+Be sure to check out the [documentation](https://github.com/brettschneider/ooze/blob/main/docs/en/index.rst) for more
 information.
