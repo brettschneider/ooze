@@ -74,12 +74,14 @@ User Guide
 
 5. `The @ooze.factory decorator <./ooze_factory.rst>`_
 
-6. `OS Environment variables <./ooze_os_environment_variables.rst>`_
+6. `The @ooze.magic decorator <./ooze_magic.rst>`_
 
-7. `Configuration files <./ooze_configuration_files.rst>`_
+7. `OS Environment variables <./ooze_os_environment_variables.rst>`_
 
-8. `Ooze pools <./ooze_pools.rst>`_
+8. `Configuration files <./ooze_configuration_files.rst>`_
 
-9. `Multi-module, multi-package Python projects <./multi-module.rst>`_
+9. `Ooze pools <./ooze_pools.rst>`_
 
-10. `Using Ooze with Bottle.py <./ooze_bottle.rst>`_
+10. `Multi-module, multi-package Python projects <./multi-module.rst>`_
+
+11. `Using Ooze with Bottle.py <./ooze_bottle.rst>`_
