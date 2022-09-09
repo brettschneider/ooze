@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """Ooze - A _very_ simple dependency injector"""
+import functools
 import inspect
-import json
 import os
 
 import yaml
@@ -184,6 +184,27 @@ def resolve(name):
     """Retrieve an item from the dependency graph from outside a provided callable"""
     _instantiate_objects()
     return _resolve_dependency(name)
+
+
+def magic(func):
+    """Decorator that injects any parameters that aren't given by the non-ooze caller."""
+
+    @functools.wraps(func)
+    def wrapper(*args, **kwargs):
+        _instantiate_objects()
+        needed_args = inspect.signature(func)
+        ooze_kwargs = {}
+        for key in needed_args.parameters:
+            try:
+                ooze_kwargs[key] = _resolve_dependency(key)
+            except InjectionError:
+                if key in kwargs:
+                    ooze_kwargs[key] = kwargs[key]
+        if len(args) + len(ooze_kwargs) != len(needed_args.parameters):
+            raise InjectionError(f"Unable to magic execute {func.__name__}() - incorrect number of parameters")
+        return func(*args, **ooze_kwargs)
+
+    return wrapper
 
 
 class OozeBottlePlugin:
