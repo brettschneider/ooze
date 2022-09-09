@@ -18,6 +18,9 @@ classifiers = [
     "Operating System :: OS Independent",
     "Framework :: Bottle",
 ]
+dependencies = [
+    "pyyaml"
+]
 
 [tool.setuptools]
 packages = ["ooze"]
