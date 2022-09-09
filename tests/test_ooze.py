@@ -63,6 +63,11 @@ def untagged_main(system: System):
     return system.do_other_job()
 
 
+@ooze.magic
+def greet(hostname: str, config: dict):
+    return f"Hostname: {hostname}, Version: {config['version']}"
+
+
 def test_ooze_with_tagged_main(mocker):
     # Given
     mock_print = mocker.patch('builtins.print')
@@ -205,3 +210,14 @@ def test_config_resolution_manual_file(mocker):
     # Then
     assert result == 'https://github.com'
     mock_open.assert_called_with('/tmp/app.yaml')
+
+
+def test_magic():
+    # Given
+    name = 'localhost'
+
+    # When
+    result = greet(name)
+
+    # Then
+    assert result == 'Hostname: localhost, Version: 1.0.0'
