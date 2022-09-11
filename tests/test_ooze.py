@@ -212,7 +212,7 @@ def test_config_resolution_manual_file(mocker):
     mock_open.assert_called_with('/tmp/app.yaml')
 
 
-def test_magic():
+def test_magic_resolves():
     # Given
     name = 'localhost'
 
@@ -221,3 +221,26 @@ def test_magic():
 
     # Then
     assert result == 'Hostname: localhost, Version: 1.0.0'
+
+
+def test_magic_doesnt_resolve():
+    # Given
+    name = 'localhost'
+    config = {'version': '2.0.0'}
+
+    # When
+    result = greet(name, config)
+
+    # Then
+    assert result == 'Hostname: localhost, Version: 2.0.0'
+
+
+def test_magic_doesnt_fails_as_expected():
+    # Given
+
+    # When
+    with pytest.raises(ooze.InjectionError) as exc_info:
+        greet()
+
+    # Then
+    assert exc_info.value.args[0] == 'hostname not a valid dependency'
