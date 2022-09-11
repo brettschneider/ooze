@@ -235,7 +235,7 @@ def test_magic_doesnt_resolve():
     assert result == 'Hostname: localhost, Version: 2.0.0'
 
 
-def test_magic_doesnt_fails_as_expected():
+def test_magic_fails_as_expected():
     # Given
 
     # When
