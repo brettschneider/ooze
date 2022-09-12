@@ -39,7 +39,6 @@ def _instantiate_objects():
     As the _provide_ decorators are encountered, if they are decorating classes, the classes
     are placed in an dictionary to be instantiated later.  This function instantiates those
     classes right before the application STARTUP function is called.
-    :return:
     """
     while True:
         new_objs = []
@@ -191,18 +190,18 @@ def magic(func):
 
     @functools.wraps(func)
     def wrapper(*args, **kwargs):
-        _instantiate_objects()
         needed_args = inspect.signature(func)
+        if len(needed_args.parameters) <= len(args) + len(kwargs):
+            return func(*args, **kwargs)
         ooze_kwargs = {}
-        for key in needed_args.parameters:
-            try:
-                ooze_kwargs[key] = _resolve_dependency(key)
-            except InjectionError:
-                if key in kwargs:
-                    ooze_kwargs[key] = kwargs[key]
-        if len(args) + len(ooze_kwargs) != len(needed_args.parameters):
-            raise InjectionError(f"Unable to magic execute {func.__name__}() - incorrect number of parameters")
-        return func(*args, **ooze_kwargs)
+        for idx, key in enumerate(needed_args.parameters.keys()):
+            if idx < len(args):
+                ooze_kwargs[key] = args[idx]
+            elif key in kwargs:
+                ooze_kwargs[key] = kwargs[key]
+            else:
+                ooze_kwargs[key] = resolve(key)
+        return func(*[], **ooze_kwargs)
 
     return wrapper
 
