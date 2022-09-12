@@ -52,14 +52,15 @@ Installing Ooze is as simple as using pip:
 
 ## Usage Notes ##
 
-Ooze has **many** features beyond what is demonstrated in the above example
+Ooze has **many** features beyond what is demonstrated in the above sample code
 including:
 
 * factories
 * automatic environment variable injection
 * automatic configuration file parsing and settings injection
+* automatic (magic) integration with manually passed arguments
 * seamless integration with [bottlepy](https://bottlepy.org/)
 * injectable object pools (i.e. Database connection pools)
  
-Be sure to check out the [documentation](https://github.com/brettschneider/ooze/blob/main/docs/en/index.rst) for more
-information.
+Be sure to check out the [documentation](https://github.com/brettschneider/ooze/blob/main/docs/en/index.rst)
+or [examples](./examples) for more information.
