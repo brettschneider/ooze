@@ -1,0 +1,7 @@
+window_settings:
+  title: Tkinter with Ooze
+  width: 500
+  height: 200
+  label:
+    message: Tkinter is easy with Ooze!
+

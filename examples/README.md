@@ -18,3 +18,11 @@ Ooze can seemlessly integrate with Flask.  This example will
 require you to install both Ooze and Flash (pip install).
 
 Project source: [flask](./flask)
+
+
+## Tkinter ##
+
+This is a simple tkinter app that shows how to use Ooze to inject
+individual widgets into a window.
+
+Project source: [tkinter](./tkinter)
