@@ -63,4 +63,4 @@ including:
 * injectable object pools (i.e. Database connection pools)
  
 Be sure to check out the [documentation](https://github.com/brettschneider/ooze/blob/main/docs/en/index.rst)
-or [examples](./examples) for more information.
+or [examples](https://github.com/brettschneider/ooze/tree/main/examples) for more information.
