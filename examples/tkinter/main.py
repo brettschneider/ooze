@@ -5,42 +5,52 @@ import tkinter as tk
 from tkinter import ttk
 
 
-@ooze.provide
-class Root:
-    def __init__(self, window_settings):
-        self.title = window_settings['title']
-        self.width = window_settings['width']
-        self.height = window_settings['height']
+@ooze.provide('root_window')
+class RootWindow:
+    def __init__(self, settings, label, button):
+        self.title = settings['title']
+        self.width = settings['width']
+        self.height = settings['height']
+        self.window = r = tk.Tk()
+        self.label = label
+        self.button = button
 
-    def generate(self):
-        r = tk.Tk()
-        r.title(self.title)
-        screen_width = r.winfo_screenwidth()
-        screen_height = r.winfo_screenheight()
+    def initialize_window(self):
+        self.window.title(self.title)
+        screen_width = self.window.winfo_screenwidth()
+        screen_height = self.window.winfo_screenheight()
         window_left = int(screen_width / 2 - self.width / 2)
         window_top = int(screen_height / 2 - self.height / 2)
-        r.geometry(f"{self.width}x{self.height}+{window_left}+{window_top}")
-        return r
+        self.window.geometry(f"{self.width}x{self.height}+{window_left}+{window_top}")
+
+    def add_widgets(self):
+        self.label.render(self.window)
+        self.button.render(self.window)
+
+    def render(self):
+        self.initialize_window()
+        self.add_widgets()
+        return self.window
 
 
-@ooze.provide
-class Label:
-    def __init__(self, window_settings):
-        self.message = window_settings['label']['message']
+@ooze.provide('label')
+class LabelWidget:
+    def __init__(self, settings):
+        self.message = settings['label']['message']
 
-    def generate(self, root):
+    def render(self, root):
         l = tk.Label(root, text=self.message)
         l.pack()
         return l
 
     
-@ooze.provide
-class Button:
+@ooze.provide('button')
+class ButtonWidget:
     def quit(self):
         print('Quitting application...')
         self.root.destroy()
 
-    def generate(self, root):
+    def render(self, root):
         self.root = root
         b = ttk.Button(root, text="Quit", command=self.quit)
         b.pack()
@@ -48,11 +58,8 @@ class Button:
     
     
 @ooze.startup
-def main(root, label, button):
-    r = root.generate()
-    l = label.generate(r)
-    b = button.generate(r)
-    r.mainloop()
+def main(root_window):
+    root_window.render().mainloop()
 
 
 if __name__ == '__main__':
