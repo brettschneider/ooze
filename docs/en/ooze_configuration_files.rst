@@ -4,9 +4,9 @@ Configuration files
 
 Overview
 --------
-Another convenience feature that Ooze provide in resolving dependencies pertains
+Another convenience feature that Ooze provides in resolving dependencies pertains
 to reading configuration files.  Ooze can automatically read configuration files
-and inject configuration files into your classes and functions as dependencies.
+and inject configuration values into your classes and functions as dependencies.
 
 Ooze will look for the following files in the root of your Python script named:
 
@@ -21,7 +21,8 @@ and functions.
 A quick example... suppose you have the following `application_settings.yaml`
 in the same directory as your Python script:
 
-.. code:: text
+.. code-block:: yaml
+    :number-lines:
 
     urls:
         customers: http://api.bigcompany.com/marketing/customers
@@ -29,7 +30,8 @@ in the same directory as your Python script:
 
 Then the Python code looks like this:
 
-.. code:: python
+.. code-block:: python
+    :number-lines:
 
     @ooze.provide('web_client')
     class HttpClient:
@@ -65,7 +67,8 @@ In addition to looking for configuration settings files in the
 file for Ooze to read.  Simply set the `APPLICATION_SETTINGS` environment variable to a
 valid file path and Ooze will use that file as the application_settings file.
 
-.. code:: sh
+.. code-block:: sh
+    :number-lines:
 
     $ export APPLICATION_SETTINGS=/opt/myapp/config.yml
     $ python myapp.py
