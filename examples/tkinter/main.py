@@ -8,29 +8,26 @@ from tkinter import ttk
 @ooze.provide('root_window')
 class RootWindow:
     def __init__(self, settings, label, button):
-        self.title = settings['title']
-        self.width = settings['width']
-        self.height = settings['height']
-        self.window = r = tk.Tk()
+        self.window = tk.Tk()
+        self.window.title(settings['title'])
+        self.window.geometry(self._calculate_geometry(settings['width'], settings['height']))
         self.label = label
         self.button = button
 
-    def initialize_window(self):
-        self.window.title(self.title)
+    def _calculate_geometry(self, width, height):
         screen_width = self.window.winfo_screenwidth()
         screen_height = self.window.winfo_screenheight()
-        window_left = int(screen_width / 2 - self.width / 2)
-        window_top = int(screen_height / 2 - self.height / 2)
-        self.window.geometry(f"{self.width}x{self.height}+{window_left}+{window_top}")
+        window_left = int(screen_width / 2 - width / 2)
+        window_top = int(screen_height / 2 - height / 2)
+        return f"{width}x{height}+{window_left}+{window_top}"
+
+    def render(self):
+        self.add_widgets()
+        return self.window
 
     def add_widgets(self):
         self.label.render(self.window)
         self.button.render(self.window)
-
-    def render(self):
-        self.initialize_window()
-        self.add_widgets()
-        return self.window
 
 
 @ooze.provide('label')
@@ -46,6 +43,8 @@ class LabelWidget:
     
 @ooze.provide('button')
 class ButtonWidget:
+    root = None
+
     def quit(self):
         print('Quitting application...')
         self.root.destroy()

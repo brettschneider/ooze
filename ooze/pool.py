@@ -1,6 +1,6 @@
 """Reusable pool context manager"""
 import threading
-from typing import Callable
+from typing import Callable, Union
 
 
 class PoolItem:
@@ -17,8 +17,8 @@ class PoolItem:
 
 class Pool:
     def __init__(self, create: Callable,
-                 reclaim: Callable or None = None,
-                 teardown: Callable or None = None,
+                 reclaim: Union[Callable, None] = None,
+                 teardown: Union[Callable, None] = None,
                  pool_size: int = 5):
         self.create = create
         self.reclaim = reclaim
@@ -28,28 +28,21 @@ class Pool:
         self._lock = threading.RLock()
 
     def __del__(self):
-        self._lock.acquire()
-        try:
+        with self._lock:
             if self.teardown:
                 for item in self.items:
                     self.teardown(item)
             self.items = []
-        finally:
-            self._lock.release()
 
     def item(self):
-        self._lock.acquire()
-        try:
+        with self._lock:
             if self.items:
                 return PoolItem(self.items.pop(0), self)
             else:
                 return PoolItem(self.create(), self)
-        finally:
-            self._lock.release()
 
     def return_item(self, item):
-        self._lock.acquire()
-        try:
+        with self._lock:
             while len(self.items) >= self.pool_size:
                 item = self.items.pop(0)
                 if self.teardown:
@@ -57,5 +50,3 @@ class Pool:
             if self.reclaim:
                 self.reclaim(item)
             self.items.append(item)
-        finally:
-            self._lock.release()

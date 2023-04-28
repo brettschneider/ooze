@@ -29,12 +29,12 @@ jobs:
         if: success() || failure()
         with:
           name: Unit Test Results
-          path: test_results.xml
+          path: test_results/output.xml
           reporter: java-junit
       - name: Coverage Report
         uses: 5monkeys/cobertura-action@master
         with:
-          path: coverage.xml
+          path: test_results/coverage.xml
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           minimum_coverage: 75
           report_name: Coverage Report
@@ -52,7 +52,7 @@ jobs:
           git pull --rebase
       - name: Bump dev branch to next version
         id: version
-        uses: vemel/nextversion@main
+        uses: vemel/nextversion@0.1.1
         with:
           path: ./pyproject.toml
           type: pep440

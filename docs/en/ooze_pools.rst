@@ -35,9 +35,11 @@ Usage
 A pool has to be instantiated and told how to manage instances of your dependency.  The
 pool constructor takes the following arguements:
 
-.. code:: Python
+.. code-block:: Python
+    :number-lines:
 
     import ooze.pool
+
 
     pool = ooze.pool.Pool(create_item, reclaim_item, teardown_item, pool_size)
 
@@ -76,7 +78,8 @@ on the pools *item()* method to obtain an instance of the dependency item.
 An example to illustrate (again you can use Pools with anything, I just happen
 to use database connections in my example as they are easy to relate to):
 
-.. code:: Python
+.. code-block:: Python
+    :number-lines:
 
     def create_item():
         db_con_factory = ooze.resolve('database_factory')

@@ -9,15 +9,16 @@ the dependency being injected appears as an OS environment variable.  It checks
 the OS environment last after all other places (functions, classes, static values).
 This is meant to save you time writing code that pulls info out of the environment.
 
-Often in containerization environment (think Docker, Kubernetes, AWS, etc) sensitive
-configuration information is made available to you application via *secrets* in the
-form of environment variables.  Ooze makes it possible to directly inject those
+Often in containerization environments (think Docker, Kubernetes, AWS, etc) sensitive
+configuration information is made available to your application via *secrets*... often
+in the form of environment variables.  Ooze makes it possible to directly inject those
 secrets (assuming your function argument names match the OS variable names) into
 your code.
 
 A quick example:
 
-.. code:: sh
+.. code-block:: sh
+    :number-lines:
 
     $ export DATABASE_HOST="locahost"
     $ export DATABASE_USERNAME="admin-tool"
@@ -25,7 +26,8 @@ A quick example:
 
 Then the Python code looks like this:
 
-.. code:: python
+.. code-block:: python
+    :number-lines:
 
     @ooze.provide('db_manger')
     class DatabaseManager:
