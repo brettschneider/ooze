@@ -8,7 +8,8 @@ Included in this package is a `Bottle.py <https://bottlepy.org/>`_ plugin that a
 Ooze to seamlessly integrate with Bottle route functions. Simply `.install()` the
 plugin and Ooze dependencies will automatically be injected into your bottle functions:
 
-.. code:: python
+.. code-block:: python
+    :number-lines:
 
     import ooze
     from bottle import Bottle

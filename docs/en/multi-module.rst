@@ -12,9 +12,11 @@ don't `import` a module or package, Ooze won't know about it.
 
 For example, you may have module `file_reader.py` that has the following code:
 
-.. code:: python
+.. code-block:: python
+    :number-lines:
 
     import ooze
+
 
     @ooze.provide
     class FileReader(datafile):
@@ -25,15 +27,18 @@ For example, you may have module `file_reader.py` that has the following code:
 
 You may also have a module named `main.py` that has the following code:
 
-.. code:: python
+.. code-block:: python
+    :number-lines:
 
     import ooze
     import file_reader          # You gotta import this or Ooze won't see it.
 
+
     ooze.provide('datafile')('/tmp/stuff.txt')
 
-    def main_func(filereader):
-        print(filereader.read())
+
+    def main_func(filereader):    # Ooze will figure out how to inject even
+        print(filereader.read())  # though it's in another module.
 
     if __name__ == '__main__':
         ooze.run(main_func)

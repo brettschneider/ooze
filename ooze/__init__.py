@@ -146,6 +146,7 @@ def provide(name_or_item):
         _INSTANCES[func_name] = func_to_provide
         return func_to_provide
     else:
+        @functools.wraps(name_or_item)
         def inner_provide(item):
             name = name_or_item.lower()
             if inspect.isclass(item):
@@ -170,6 +171,7 @@ def factory(name_or_item):
         _FACTORIES[factory_name] = factory_func
         return factory_func
     else:
+        @functools.wraps(name_or_item)
         def inner_factory(item):
             inner_factory_func = item
             inner_factory_name = name_or_item

@@ -7,7 +7,8 @@ Overview
 You can use the *@ooze.provide* decorator to add functions and classes to your application's
 dependency graph.
 
-.. code:: python
+.. code-block:: python
+    :number-lines:
 
     @ooze.provide('get_users')
     def lookup_user_list():
@@ -16,7 +17,8 @@ dependency graph.
 The *name* argment of *@ooze.provide* is optional.  If you don't specify it, Ooze will
 assume the name of the function/class to be it's name in the dependency graph.
 
-.. code:: python
+.. code-block:: python
+    :number-lines:
 
     @ooze.provide
     def lookup_user_list():
@@ -29,7 +31,8 @@ the class when inserting it into the dependency in the graph. In the following e
 the class will be inserted into the dependency graph as
 **welcomewagon**, not as *WelcomeWagon*.
 
-.. code:: python
+.. code-block:: python
+    :number-lines:
 
     @ooze.provide
     class WelcomeWagon:
@@ -39,7 +42,8 @@ the class will be inserted into the dependency graph as
 As with the function decoration, you are free to specify a name for your class when
 inserting it into the graph.  If you specify a name, Ooze will not lower case it.
 
-.. code:: python
+.. code-block:: python
+    :number-lines:
 
     @ooze.provide('WELCOME_WAGON')
     class WelcomeWagon:
@@ -57,7 +61,7 @@ decorating an object instance, but rather a class.  This is a subtle, but import
 difference.
 
 When you're using dependencies, you're not expecting a *class* to be injected into
-your functions.  You're expecint an object *instance*.  How does Ooze deal with that?
+your functions.  You're expecting an object *instance*.  How does Ooze deal with that?
 
 I'm glad you asked!
 
@@ -72,4 +76,5 @@ into functions/methods.
 This is important to note because you can't assume that a dependency injected into
 your functions are brand-new.  They may have been used by other functions/methods
 earlier in your code's execution.  This has serious implications for multi-threaded
-applications.
+applications that you should take into consideration.  If you need a new instance of
+a class each time it's used, you should look at the @ooze.factory decorator.

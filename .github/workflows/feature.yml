@@ -1,11 +1,11 @@
-name: Release Actions
+name: Development Actions
 on:
   push:
-    tags:
-      - 'v*'
+    branches:
+      - feature/*
 jobs:
-  test-package-release:
-    name: Test and Deploy Production Code
+  test-package:
+    name: Test and Package Development Code
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -35,18 +35,9 @@ jobs:
           path: test_results/coverage.xml
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           minimum_coverage: 75
+          show_line: true
+          show_missing: true
+          skip_covered: false
           report_name: Coverage Report
-      - name: Build wheel
+      - name: Build wheel and source distribution
         run: pipenv run python setup.py sdist bdist_wheel
-      - name: Create release
-        uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          prerelease: false
-          files: dist/*
-      - name: Publish to PyPi (production)
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_PROD_TOKEN }}
-          TWINE_NON_INTERACTIVE: 1
-        run: pipenv run twine upload --skip-existing dist/*
