@@ -208,6 +208,28 @@ def magic(func):
     return wrapper
 
 
+def magic_dependable(func):
+    """A decorator that bridges a FastAPI Dependable with Ooze"""
+
+    def get_args():
+        needed_args = inspect.signature(func)
+        kwargs = {}
+        for idx, key in enumerate(needed_args.parameters.keys()):
+            kwargs[key] = resolve(key)
+        return kwargs
+
+    def wrapper():
+        ooze_kwargs = get_args()
+        return func(**ooze_kwargs)
+
+    async def async_wrapper():
+        ooze_kwargs = get_args()
+
+        return await func(**ooze_kwargs)
+
+    return async_wrapper if inspect.iscoroutinefunction(func) else wrapper
+
+
 class OozeBottlePlugin:
     api = 2
 

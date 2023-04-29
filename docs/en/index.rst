@@ -92,4 +92,6 @@ User Guide
 
 10. `Multi-module, multi-package Python projects <./multi-module.rst>`_
 
-11. `Using Ooze with Bottle.py <./ooze_bottle.rst>`_
+11. `Using Ooze with FastAPI (magic_dependable) <./ooze_fastapi.rst>`_
+
+12. `Using Ooze with Bottle.py (Bottle plugin) <./ooze_bottle.rst>`_
