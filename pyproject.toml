@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ooze"
-version = "1.0.0"
+version = "1.0.1"
 authors = [
   { name="Steve Brettschneider", email="steve@bluehousefamily.com" },
 ]
@@ -13,10 +13,15 @@ readme = "README.md"
 license = { file="LICENSE" }
 requires-python = ">=3.9"
 classifiers = [
-    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
     "Operating System :: OS Independent",
     "Framework :: Bottle",
+    "Framework :: FastAPI",
+    "Framework :: Flask"
 ]
 dependencies = [
     "pyyaml"
@@ -28,4 +33,4 @@ packages = ["ooze"]
 [project.urls]
 "Homepage" = "https://github.com/brettschneider/ooze"
 "Bug Tracker" = "https://github.com/brettschneider/ooze/issues"
-"Documentation" = "https://github.com/brettschneider/ooze/blob/main/docs/en/index.rst"
+"Documentation" = "https://ooze.readthedocs.io/en/latest/"

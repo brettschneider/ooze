@@ -10,7 +10,7 @@ Overview
 Injecting dependencies makes organizing and reorganizing code easier and more
 efficient.  Additionally injecting dependencies makes testing your code and
 writing unit-tests much easier.  Unfortunately, manually injecting dependencies
-can rappidly become tedious and error prone.   That's where dependency
+can rapidly become tedious and error prone.   That's where dependency
 injectors (DI) come in.  Dependency injectors automate standing up your object
 graphs by automatically injecting dependencies into your functions and class
 instances.
@@ -18,7 +18,13 @@ instances.
 Ooze is an attempt to do dependency injection in Python in the simplest
 way possible.  It embraces Python decorators to leverage what classes,
 functions, and even static values are included in the dependency
-injection graph.  You can get started in two easy steps:
+injection graph.
+
+Since Ooze is implemented as a set of pure Python decorators, it works
+seamlessly with any number of other packages and frameworks such as: Bottle,
+Flast and FastAPI.
+
+You can get started in two easy steps:
 
 - decorate your functions, classes and/or variable items to add them to
   dependency graph
@@ -31,32 +37,29 @@ That's it!  Here's a quick example:
 
     import ooze
 
-    @ooze.provide                       # Add to graph as 'upper_case' since a name wasn't specified
+    @ooze.provide                       # Add the upper_case function to the dependency graph
     def upper_case(string):
         return string.upper()
 
-
-    ooze.provide_static('address', {    # Add a static dictionary to the graph, naming it 'address'
+    ooze.provide_static('address', {    # Add a static dictionary to the dependency graph
         "name": "Steve",
         "title": "Developer"
     })
 
-
-    @ooze.provide('greeter')            # Add to graph as 'greeter'
+    @ooze.provide('greeter')            # Add to the dependency graph, naming it 'greeter'
     class WelcomeWagon:
-        def __init__(self, upper_case, address):
+        def __init__(self, upper_case, address):   # Automatically injected by Ooze
             self.address = address
             self.upper = upper_case
 
         def greet(self):
             return self.upper(f"Hello {self.address['name']}")
 
-
-    def main(greeter):
+    def main(greeter):                  # Ooze will automatically inject the greeter
         print(greeter.greet())
 
 
-    ooze.run(main)
+    ooze.run(main)  # Ooze takes care of getting 'main' to run, injecting whatever is needed.
 
 
 Installing Ooze
@@ -72,24 +75,26 @@ Installing Ooze is as simple as using pip:
 User Guide
 ------------
 
-1. `How injection works in Ooze <./how_injection_works.rst>`_
+1. :ref:`how-injection-works`
 
-2. `The @ooze.provide decorator <./ooze_provide.rst>`_
+2. :ref:`ooze-provide-decorator`
 
-3. `The ooze.provide_static function <./ooze_provide_static.rst>`_
+3. :ref:`ooze-provide-static`
 
-4. `The @ooze.startup decorator <./ooze_startup.rst>`_
+4. :ref:`ooze-startup`
 
-5. `The @ooze.factory decorator <./ooze_factory.rst>`_
+5. :ref:`ooze-factory`
 
-6. `The @ooze.magic decorator <./ooze_magic.rst>`_
+6. :ref:`ooze-magic`
 
-7. `OS Environment variables <./ooze_os_environment_variables.rst>`_
+7. :ref:`environment-variables`
 
-8. `Configuration files <./ooze_configuration_files.rst>`_
+8. :ref:`configuration-files`
 
-9. `Ooze pools <./ooze_pools.rst>`_
+9. :ref:`ooze-pools`
 
-10. `Multi-module, multi-package Python projects <./multi-module.rst>`_
+10. :ref:`multi-module`
 
-11. `Using Ooze with Bottle.py <./ooze_bottle.rst>`_
+11. :ref:`ooze-fastapi`
+
+12. :ref:`bottle-plugin`

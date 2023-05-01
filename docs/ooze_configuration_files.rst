@@ -1,6 +1,7 @@
-===================
-Configuration files
-===================
+.. _configuration-files:
+=====================================
+Injecting configuration file settings
+=====================================
 
 Overview
 --------
@@ -21,16 +22,19 @@ and functions.
 A quick example... suppose you have the following `application_settings.yaml`
 in the same directory as your Python script:
 
-.. code-block:: yaml
+
+.. code:: yaml
     :number-lines:
 
     urls:
         customers: http://api.bigcompany.com/marketing/customers
         vendor_1: https://otherco.com/public/api/orders
 
+
 Then the Python code looks like this:
 
-.. code-block:: python
+
+.. code:: python
     :number-lines:
 
     @ooze.provide('web_client')
@@ -48,6 +52,7 @@ Then the Python code looks like this:
                 return True
             except:
                 return False
+
 
 As you can see, Ooze will find the `application_settings.yaml` file, read it,
 parse it and then inject the `urls` configuration into the HttpClient instance.
@@ -67,11 +72,13 @@ In addition to looking for configuration settings files in the
 file for Ooze to read.  Simply set the `APPLICATION_SETTINGS` environment variable to a
 valid file path and Ooze will use that file as the application_settings file.
 
-.. code-block:: sh
+
+.. code:: sh
     :number-lines:
 
     $ export APPLICATION_SETTINGS=/opt/myapp/config.yml
     $ python myapp.py
+
 
 In the above example, Ooze will first try to read the `/opt/myapp/config.yml` file in
 search of configuration settings.  If it cannot file that file, it will then attempt to
