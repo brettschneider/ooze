@@ -33,4 +33,4 @@ packages = ["ooze"]
 [project.urls]
 "Homepage" = "https://github.com/brettschneider/ooze"
 "Bug Tracker" = "https://github.com/brettschneider/ooze/issues"
-"Documentation" = "https://github.com/brettschneider/ooze/blob/main/docs/index.rst"
+"Documentation" = "https://ooze.readthedocs.io/en/latest/"
