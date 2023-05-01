@@ -92,7 +92,7 @@ User Guide
 
 10. `Multi-module, multi-package Python projects <./multi-module.rst>`_
 
-11. :doc:`ooze_fast_api`
+11. :doc:`Using Ooze with FastAPI (magic_dependable) <ooze_fastapi>`_
 
 11. `Using Ooze with FastAPI (magic_dependable) <./ooze_fastapi.rst>`_
 
