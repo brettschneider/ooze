@@ -18,7 +18,7 @@ graph.  The most common way is to decorate your class or function with the `@ooz
 decorator.
 
 
-.. code-block:: python
+.. code:: python
     :number-lines:
 
     import ooze
@@ -41,7 +41,7 @@ take an optional *name* argument that allows you to give your dependency a name 
 inserting it into the graph
 
 
-.. code-block:: python
+.. code:: python
     :number-lines:
 
     import ooze
@@ -56,7 +56,7 @@ the developer could decide to omit the name and Ooze will assume *lookup_user_li
 the name of the dependency when it inserts it into the graph.
 
 
-.. code-block:: python
+.. code:: python
     :number-lines:
 
     import ooze
@@ -73,7 +73,7 @@ In the following example, the class will be inserted into the dependency graph a
 **welcomewagon**, not as *WelcomeWagon*.
 
 
-.. code-block:: python
+.. code:: python
     :number-lines:
 
     import ooze
@@ -88,7 +88,7 @@ As with the function decoration, you are free to specify a name for your class w
 inserting it into the graph.  If you specify a name, Ooze will not lower case it.
 
 
-.. code-block:: python
+.. code:: python
     :number-lines:
 
     import ooze
@@ -115,7 +115,7 @@ into those arguments.
 Take for example the following function:
 
 
-.. code-block:: python
+.. code:: python
     :number-lines:
 
     import ooze
@@ -173,7 +173,7 @@ to *ooze.run*, Ooze will look for a function decorated with the *@ooze.startup*
 decorator and will run that.
 
 
-.. code-block:: python
+.. code:: python
     :number-lines:
 
     import ooze
