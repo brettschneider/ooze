@@ -72,9 +72,9 @@ Installing Ooze is as simple as using pip:
 User Guide
 ------------
 
-1. `How injection works in Ooze <./how_injection_works.rst>`_
+1. :ref:`how-injection-works`
 
-2. `The @ooze.provide decorator <./ooze_provide.rst>`_
+2. :ref:`ooze-provide-decorator`
 
 3. `The ooze.provide_static function <./ooze_provide_static.rst>`_
 
@@ -92,8 +92,6 @@ User Guide
 
 10. `Multi-module, multi-package Python projects <./multi-module.rst>`_
 
-11. :ref:`ooze-fastapi`.
-
-11. `Using Ooze with FastAPI (magic_dependable) <./ooze_fastapi.rst>`_
+11. :ref:`ooze-fastapi`
 
 12. `Using Ooze with Bottle.py (Bottle plugin) <./ooze_bottle.rst>`_

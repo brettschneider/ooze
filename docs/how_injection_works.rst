@@ -1,3 +1,4 @@
+.. _how-injection-works:
 ===========================
 How Injection Works in Ooze
 ===========================

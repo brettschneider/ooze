@@ -1,3 +1,4 @@
+.. _ooze-provide-decorator:
 ===========================
 The @ooze.provide decorator
 ===========================
