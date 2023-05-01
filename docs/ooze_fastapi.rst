@@ -81,3 +81,41 @@ will get all its dependencies injected from Ooze.
 
 FastAPI support both `async def` and `def` function definitions for Dependables.
 Ooze will honor both.
+
+Since FastAPI dependencies are nothing more specific than Python callables
+you can just as easily decorate a class with `@ooze.magic_dependable`.
+Here's another example:
+
+.. code-block:: python
+    :number-lines:
+
+    import ooze
+    from fastapi import Depends, FastAPI
+
+    app = FastAPI()
+
+    ooze.provide_static('name', 'world')
+
+    @ooze.provide
+    def upper(value: str) -> str:
+        return value.upper()
+
+    @ooze.magic_dependable
+    class Greeter:
+        def __init__(self, name: str, upper: callable):
+            self._name = name
+            self._upper = upper
+
+        @property
+        def greeting(self):
+            return f"Hello {self._upper(self._name)}"
+
+    @app.get("/items")
+    async def read_items(greeter: Greeter = Depends(Greeter)):
+        return {'greeting': greeter.greeting}
+
+In both cases (function as a dependency or class as dependency), it's
+important to note.  All of the function arguments (or constructor
+arguments) need to be injectable by Ooze.  The `@ooze.magic_dependable`
+decorator tricks FastAPI into thinking your dependency doesn't take any
+arguments at all because Oooze will be providing them.
