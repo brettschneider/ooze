@@ -16,6 +16,7 @@ Ooze provides a number of mechanisms that can be used to put items into the depe
 graph.  The most common way is to decorate your class or function with the `@ooze.provide`
 decorator.
 
+
 .. code-block:: python
     :number-lines:
 
@@ -25,6 +26,7 @@ decorator.
     @ooze.provide
     def lookup_user_list():
         return requests.get('https://myapp.com/api/users').json()
+
 
 In the above code-snippet, the `@ooze.provide` decorator adds the `lookup_user_list`
 function to the dependency graph.  The `lookup_user_list` function can now be injected
@@ -37,6 +39,7 @@ be explicitly given by the developer or it can be inferred by Ooze.  The ooze de
 take an optional *name* argument that allows you to give your dependency a name when
 inserting it into the graph
 
+
 .. code-block:: python
     :number-lines:
 
@@ -44,9 +47,11 @@ inserting it into the graph
     def lookup_user_list():
         return requests.get('https://myapp.com/api/users').json()
 
+
 In the above example, the item is given the name *get_users* by the developer.  Conversely
 the developer could decide to omit the name and Ooze will assume *lookup_user_list* to be
 the name of the dependency when it inserts it into the graph.
+
 
 .. code-block:: python
     :number-lines:
@@ -55,11 +60,13 @@ the name of the dependency when it inserts it into the graph.
     def lookup_user_list():
         return requests.get('https://myapp.com/api/users').json()
 
+
 For classes, if the name is omitted from the decorator, Ooze will lowercase the name of
 the class when naming the dependency in the graph.  This is because ooze does
 argument-name injection and by convention, Python uses lower-case argument names.
 In the following example, the class will be inserted into the dependency graph as
 **welcomewagon**, not as *WelcomeWagon*.
+
 
 .. code-block:: python
     :number-lines:
@@ -69,8 +76,10 @@ In the following example, the class will be inserted into the dependency graph a
         def __init__(self):
             ...
 
+
 As with the function decoration, you are free to specify a name for your class when
 inserting it into the graph.  If you specify a name, Ooze will not lower case it.
+
 
 .. code-block:: python
     :number-lines:
@@ -79,6 +88,7 @@ inserting it into the graph.  If you specify a name, Ooze will not lower case it
     class WelcomeWagon:
         def __init__(self):
             ...
+
 
 This class would be inserted into the graph as *WELCOME_WAGON*.
 
@@ -93,6 +103,7 @@ dependency graph for items with the same name.  It then injects the items it fin
 into those arguments.
 
 Take for example the following function:
+
 
 .. code-block:: python
     :number-lines:
@@ -131,6 +142,7 @@ that.
 First, there is the *ooze.run()* function.  Ooze.run() will try to start running
 the application with a starutp function.
 
+
 .. code:: python
     :number-lines:
 
@@ -142,6 +154,7 @@ the application with a starutp function.
     if __name__ == '__main__':
         ooze.run(main)
 
+
 In the above example, Ooze will try to run the *main* function.  It will attempt
 to find items named *greeter* and *request_processor* in the dependency graph and
 it will pass them as arguments to the *main* function.
@@ -149,6 +162,7 @@ it will pass them as arguments to the *main* function.
 *Ooze.run* doesn't have to take any arguments at all.  If no arguments are passed
 to *ooze.run*, Ooze will look for a function decorated with the *@ooze.startup*
 decorator and will run that.
+
 
 .. code-block:: python
     :number-lines:
@@ -165,9 +179,11 @@ decorator and will run that.
     if __name__ == '__main__':
         ooze.run()
 
+
 You aren't **required** to let Ooze run your code.  That's just convenience
 functionality that Ooze provides.  You can also just pull items out of the graph
 and run them yourself using the *ooze.resolve* function.
+
 
 .. code:: python
     :number-lines:
@@ -188,6 +204,7 @@ and run them yourself using the *ooze.resolve* function.
     if __name__ == '__main__':
         g = ooze.resolve('greeter')
         print(g.greet())
+
 
 In this case, Ooze recognized that *greeter* is in the dependency graph and instantiates
 an instance of the WelcomeWagon class.  Ooze.resolve returns that instance for your use.
