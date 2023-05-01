@@ -1,6 +1,6 @@
 .. _how-injection-works:
 ===========================
-How Injection Works in Ooze
+How injection works in Ooze
 ===========================
 
 Overview

@@ -1,6 +1,6 @@
 .. _ooze-pools:
 ================================
-Resource sharing with Ooze Pools
+Resource sharing with Ooze pools
 ================================
 
 Overview

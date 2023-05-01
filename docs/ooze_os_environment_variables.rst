@@ -1,7 +1,7 @@
 .. _environment-variables:
-========================
-OS Environment Variables
-========================
+==================================
+Injecting OS environment variables
+==================================
 
 Overview
 --------

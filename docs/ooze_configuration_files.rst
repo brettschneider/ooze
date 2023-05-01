@@ -1,7 +1,7 @@
 .. _configuration-files:
-===================
-Configuration files
-===================
+=====================================
+Injecting configuration file settings
+=====================================
 
 Overview
 --------
