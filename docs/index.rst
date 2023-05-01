@@ -76,22 +76,22 @@ User Guide
 
 2. :ref:`ooze-provide-decorator`
 
-3. `The ooze.provide_static function <./ooze_provide_static.rst>`_
+3. :ref:`ooze-provide-static`
 
-4. `The @ooze.startup decorator <./ooze_startup.rst>`_
+4. :ref:`ooze-startup`
 
-5. `The @ooze.factory decorator <./ooze_factory.rst>`_
+5. :ref:`ooze-factory`
 
-6. `The @ooze.magic decorator <./ooze_magic.rst>`_
+6. :ref:`ooze-magic`
 
-7. `OS Environment variables <./ooze_os_environment_variables.rst>`_
+7. :ref:`environment-variables`
 
-8. `Configuration files <./ooze_configuration_files.rst>`_
+8. :ref:`configuration-files`
 
-9. `Ooze pools <./ooze_pools.rst>`_
+9. :ref:`ooze-pools`
 
-10. `Multi-module, multi-package Python projects <./multi-module.rst>`_
+10. :ref:`multi-module`
 
 11. :ref:`ooze-fastapi`
 
-12. `Using Ooze with Bottle.py (Bottle plugin) <./ooze_bottle.rst>`_
+12. :ref:`bottle-plugin`

@@ -1,3 +1,4 @@
+.. _ooze-factory:
 ===========================
 The @ooze.factory decorator
 ===========================

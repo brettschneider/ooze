@@ -1,3 +1,4 @@
+.. _multi-module:
 ==========================================
 Multi-module and/or multi-package projects
 ==========================================

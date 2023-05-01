@@ -1,3 +1,4 @@
+.. _ooze-startup:
 ===========================
 The @ooze.startup decorator
 ===========================

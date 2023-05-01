@@ -1,3 +1,4 @@
+.. _ooze-provide-static:
 ================================
 The ooze.provide_static function
 ================================

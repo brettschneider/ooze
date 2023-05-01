@@ -1,6 +1,7 @@
-===========================
-Bonus Feature!  Ooze Pools!
-===========================
+.. _ooze-pools:
+================================
+Resource sharing with Ooze Pools
+================================
 
 Overview
 --------

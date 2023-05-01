@@ -1,3 +1,4 @@
+.. _configuration-files:
 ===================
 Configuration files
 ===================
