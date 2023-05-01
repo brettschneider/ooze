@@ -13,26 +13,23 @@ remaining (missing) function arguments that you didn't supply.  Here's a quick e
 
 A quick example may make it more clear:
 
-.. code-block:: python
+.. code:: python
     :number-lines:
 
     import ooze
     import socket
 
-
     ooze.provide_static('version', '1.0.0')
-
 
     @ooze.magic
     def app_title(hostname, version):
         print(f"App version {version} running on {hostname}")
 
-
     app_title(socket.gethostname())
 
 Running this script will output:
 
-.. code-block:: sh
+.. code:: sh
     :number-lines:
 
     $ python script.py

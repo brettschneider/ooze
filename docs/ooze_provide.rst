@@ -8,8 +8,10 @@ Overview
 You can use the *@ooze.provide* decorator to add functions and classes to your application's
 dependency graph.
 
-.. code-block:: python
+.. code:: python
     :number-lines:
+
+    import ooze
 
     @ooze.provide('get_users')
     def lookup_user_list():
@@ -18,8 +20,10 @@ dependency graph.
 The *name* argment of *@ooze.provide* is optional.  If you don't specify it, Ooze will
 assume the name of the function/class to be it's name in the dependency graph.
 
-.. code-block:: python
+.. code:: python
     :number-lines:
+
+    import ooze
 
     @ooze.provide
     def lookup_user_list():
@@ -32,8 +36,10 @@ the class when inserting it into the dependency in the graph. In the following e
 the class will be inserted into the dependency graph as
 **welcomewagon**, not as *WelcomeWagon*.
 
-.. code-block:: python
+.. code:: python
     :number-lines:
+
+    import ooze
 
     @ooze.provide
     class WelcomeWagon:
@@ -43,8 +49,10 @@ the class will be inserted into the dependency graph as
 As with the function decoration, you are free to specify a name for your class when
 inserting it into the graph.  If you specify a name, Ooze will not lower case it.
 
-.. code-block:: python
+.. code:: python
     :number-lines:
+
+    import ooze
 
     @ooze.provide('WELCOME_WAGON')
     class WelcomeWagon:

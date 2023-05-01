@@ -18,16 +18,19 @@ your code.
 
 A quick example:
 
-.. code-block:: sh
+
+.. code:: sh
     :number-lines:
 
     $ export DATABASE_HOST="locahost"
     $ export DATABASE_USERNAME="admin-tool"
     $ export DATABASE_PASSWORD="itza-sooper-secret"
 
+
 Then the Python code looks like this:
 
-.. code-block:: python
+
+.. code:: python
     :number-lines:
 
     @ooze.provide('db_manger')
@@ -35,7 +38,7 @@ Then the Python code looks like this:
         def __init__(self, database_host, database_username, database_password):
             self.db = connect(database_host, database_username, database_password)
 
+
 Ooze will attempt to find your OS variable with the exact case you specify in your
 function arguments.  If it can't find it, it will also try upper-case and lower-case
 before giving up.
-

@@ -41,12 +41,10 @@ That's it!  Here's a quick example:
     def upper_case(string):
         return string.upper()
 
-
     ooze.provide_static('address', {    # Add a static dictionary to the dependency graph
         "name": "Steve",
         "title": "Developer"
     })
-
 
     @ooze.provide('greeter')            # Add to the dependency graph, naming it 'greeter'
     class WelcomeWagon:
@@ -56,7 +54,6 @@ That's it!  Here's a quick example:
 
         def greet(self):
             return self.upper(f"Hello {self.address['name']}")
-
 
     def main(greeter):                  # Ooze will automatically inject the greeter
         print(greeter.greet())
