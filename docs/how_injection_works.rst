@@ -3,6 +3,7 @@
 How injection works in Ooze
 ===========================
 
+
 Overview
 --------
 Like many other dependency injectors, Ooze builds up graph of objects that can be used
@@ -22,7 +23,6 @@ decorator.
 
     import ooze
 
-
     @ooze.provide
     def lookup_user_list():
         return requests.get('https://myapp.com/api/users').json()
@@ -31,6 +31,7 @@ decorator.
 In the above code-snippet, the `@ooze.provide` decorator adds the `lookup_user_list`
 function to the dependency graph.  The `lookup_user_list` function can now be injected
 into other functions and/or objects.
+
 
 Naming dependencies
 -------------------
@@ -42,6 +43,8 @@ inserting it into the graph
 
 .. code-block:: python
     :number-lines:
+
+    import ooze
 
     @ooze.provide('get_users')
     def lookup_user_list():
@@ -55,6 +58,8 @@ the name of the dependency when it inserts it into the graph.
 
 .. code-block:: python
     :number-lines:
+
+    import ooze
 
     @ooze.provide
     def lookup_user_list():
@@ -71,6 +76,8 @@ In the following example, the class will be inserted into the dependency graph a
 .. code-block:: python
     :number-lines:
 
+    import ooze
+
     @ooze.provide
     class WelcomeWagon:
         def __init__(self):
@@ -84,6 +91,8 @@ inserting it into the graph.  If you specify a name, Ooze will not lower case it
 .. code-block:: python
     :number-lines:
 
+    import ooze
+
     @ooze.provide('WELCOME_WAGON')
     class WelcomeWagon:
         def __init__(self):
@@ -91,6 +100,7 @@ inserting it into the graph.  If you specify a name, Ooze will not lower case it
 
 
 This class would be inserted into the graph as *WELCOME_WAGON*.
+
 
 Dependency resolution
 ---------------------
@@ -110,12 +120,10 @@ Take for example the following function:
 
     import ooze
 
-
     @ooze.factory('version')
     def lookup_version():
         with open('version_file.txt') as infile:
             return infile.read().strip()
-
 
     def format_version(version):
         return f"Current version: {version}"
@@ -146,10 +154,11 @@ the application with a starutp function.
 .. code:: python
     :number-lines:
 
+    import ooze
+
     def main(greeter, request_processor):
         print(greeter.startup_message())
         print(request_processor())
-
 
     if __name__ == '__main__':
         ooze.run(main)
@@ -169,12 +178,10 @@ decorator and will run that.
 
     import ooze
 
-
     @ooze.startup
     def main(greeter, request_processor):
         print(greeter.startup_message())
         print(request_processor())
-
 
     if __name__ == '__main__':
         ooze.run()
@@ -190,7 +197,6 @@ and run them yourself using the *ooze.resolve* function.
 
     import ooze
 
-
     @ooze.provide('greeter')
     class WelcomeWagon:
         def __init__(self, text_formatter, version):
@@ -199,7 +205,6 @@ and run them yourself using the *ooze.resolve* function.
 
         def greet(self):
             ...
-
 
     if __name__ == '__main__':
         g = ooze.resolve('greeter')
