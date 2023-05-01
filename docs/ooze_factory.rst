@@ -1,3 +1,4 @@
+.. _ooze-factory:
 ===========================
 The @ooze.factory decorator
 ===========================
@@ -15,18 +16,17 @@ in the dependency graph.
 
 A quick example may make it more clear:
 
-.. code-block:: python
+
+.. code:: python
     :number-lines:
 
     import ooze
     import json
 
-
     @ooze.factory('config')
     def lookup_config():
         with open('config.json') as infile:
             return json.load(infile)
-
 
     @ooze.provide('db')
     class DatabaseManager:
@@ -35,6 +35,7 @@ A quick example may make it more clear:
 
         def get_connection(self):
             pass
+
 
 In the above example, the DatabaseManager needs a *config* dictionary to be injected into
 it so that it knows how to connect to a database.  The DatabaseManager shouldn't have to
